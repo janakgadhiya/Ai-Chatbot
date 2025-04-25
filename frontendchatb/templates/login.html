@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <form class="login-form" onsubmit="return login(event)">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="options">
+                <label><input type="checkbox"> Remember Me</label>
+                <a href="forgot-password.html">Forgot Password?</a>
+            </div>
+            <button type="submit">Login</button>
+            <p>Don't have an account?</p>
+            <a href="signup.html">Sign Up</a>
+        </form>
+    </div>
+
+    <script>
+        async function login(event) {
+            event.preventDefault(); // Prevent form submission
+    
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+    
+            let formData = new URLSearchParams();
+            formData.append("username", email);  // FastAPI expects "username" key
+            formData.append("password", password);
+    
+            try {
+                let response = await fetch("http://127.0.0.1:8000/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: formData
+                });
+    
+                let data = await response.json();
+    
+                if (response.ok) {
+                    localStorage.setItem("token", data.access_token); // Store JWT token
+                    alert("Login Successful! Redirecting...");
+                    window.location.href = "dummy.html"; // Redirect to dummy page
+                } else {
+                    alert("Login failed: " + data.detail);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            }
+        }
+    </script>
+    
+</body>
+</html>

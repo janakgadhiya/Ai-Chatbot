@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Floating Chat Icon -->
+    <div id="chat-icon" onclick="toggleChat()">💬</div>
+
+    <!-- Chatbot Container -->
+    <div id="chat-container">
+        <div class="chat-header">
+            <span>Chat with us!</span>
+            <button onclick="toggleChat()">✖</button>
+        </div>
+        <div id="chatbox">
+            <p><b>Bot:</b> Hello! How can I help you today?</p>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your message...">
+            <button onclick="sendQuery()">Send</button>
+        </div>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
